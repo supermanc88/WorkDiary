@@ -1,8 +1,12 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
+// 防止出现中文乱码的问题
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QMenu>
+#include <QAction>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -12,6 +16,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+#pragma execution_character_set("utf-8")
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -20,10 +26,16 @@ public:
 
 public slots:
     void WorkDiaryTrayIconActivate(QSystemTrayIcon::ActivationReason reason);
+    void TrayMenuActShow();
+    void TrayMenuActQuit();
 
 
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray_icon;
+    QMenu *tray_menu;
+    QAction *tray_menu_act_show_window;
+    QAction *tray_menu_act_quit;
+//    QTextCodec *codec;
 };
 #endif // MAINWINDOW_H
