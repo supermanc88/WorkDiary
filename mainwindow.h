@@ -8,6 +8,8 @@
 #include <QMenu>
 #include <QAction>
 
+#include "getwindowthread.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -21,6 +23,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+
+    void closeEvent(QCloseEvent *event);
 
     void changeEvent(QEvent *event);
 
@@ -37,5 +43,6 @@ private:
     QAction *tray_menu_act_show_window;
     QAction *tray_menu_act_quit;
 //    QTextCodec *codec;
+    GetWindowThread *thread;
 };
 #endif // MAINWINDOW_H

@@ -5,6 +5,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "getwindowthread.h"
 
 #include "common.h"
 
@@ -43,15 +44,26 @@ MainWindow::MainWindow(QWidget *parent)
     tray_menu->addAction(tray_menu_act_quit);
     tray_icon->setContextMenu(tray_menu);
 
+    thread = new GetWindowThread(this);
+
     connect(tray_icon, &QSystemTrayIcon::activated, this, &MainWindow::WorkDiaryTrayIconActivate);
 
     connect(tray_menu_act_quit, &QAction::triggered, this, &MainWindow::TrayMenuActQuit);
     connect(tray_menu_act_show_window, &QAction::triggered, this, &MainWindow::TrayMenuActShow);
+
+
+    thread->start();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    thread->CloseThread();
+    thread->wait();
 }
 
 

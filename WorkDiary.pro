@@ -16,15 +16,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    getwindowthread.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     common.h \
+    getwindowthread.h \
     mainwindow.h
 
 FORMS += \
     mainwindow.ui
+
+LIBS += "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\User32.Lib"
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
