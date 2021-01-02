@@ -15,6 +15,9 @@ public:
     explicit SetWidget(QWidget *parent = nullptr);
     ~SetWidget();
 
+public slots:
+    void AutoStartSlots();
+
 signals:
 
 private:
