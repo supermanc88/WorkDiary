@@ -2,10 +2,20 @@
 #include <QEvent>
 #include <QAction>
 #include <QTextCodec>
+#include <QFormLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QGridLayout>
+#include <QVBoxLayout>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "getwindowthread.h"
+#include "mainwidget.h"
+#include "datawidget.h"
+#include "planwidget.h"
+#include "setwidget.h"
 
 #include "common.h"
 
@@ -21,8 +31,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle(WORKDIARY_WITH_VERSION);
 
-    QIcon icon = QIcon("E:\\Windows\\QT\\WorkDiary\\icon.png");
-    QIcon quit_icon = QIcon("E:\\Windows\\QT\\WorkDiary\\close.png");
+    // 禁用窗口最大化和窗口大小改变
+    setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
+    setFixedSize(this->width(), this->height());
+
+    // 主程序图标
+    QIcon icon = QIcon(":/icon/workdiary/icon.png");
+    // 关闭图标
+    QIcon quit_icon = QIcon(":/icon/workdiary/close.png");
+    // 设置图标
+    QIcon set_icon = QIcon(":/icon/workdiary/set.png");
+    // 主页面图标
+    QIcon main_icon = QIcon(":/icon/workdiary/all.png");
+    // 数据图标
+    QIcon data_icon = QIcon(":/icon/workdiary/data.png");
+    // 计划图标
+    QIcon plan_icon = QIcon(":/icon/workdiary/task-management.png");
 
     // 设置窗口图标
     this->setWindowIcon(icon);
@@ -45,6 +69,20 @@ MainWindow::MainWindow(QWidget *parent)
     tray_icon->setContextMenu(tray_menu);
 
     thread = new GetWindowThread(this);
+
+    main_widget = new MainWidget();
+    data_widget = new DataWidget();
+    plan_widget = new PlanWidget();
+    set_widget = new SetWidget();
+
+    tab_widget = new QTabWidget(this);
+    tab_widget->addTab(main_widget, main_icon, "主页");
+    tab_widget->addTab(data_widget, data_icon, "数据");
+    tab_widget->addTab(plan_widget, plan_icon, "计划");
+    tab_widget->addTab(set_widget, set_icon, "设置");
+
+    tab_widget->resize(this->size());
+
 
     connect(tray_icon, &QSystemTrayIcon::activated, this, &MainWindow::WorkDiaryTrayIconActivate);
 

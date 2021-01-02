@@ -7,8 +7,13 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QAction>
+#include <QTabWidget>
 
 #include "getwindowthread.h"
+#include "mainwidget.h"
+#include "datawidget.h"
+#include "planwidget.h"
+#include "setwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,5 +49,11 @@ private:
     QAction *tray_menu_act_quit;
 //    QTextCodec *codec;
     GetWindowThread *thread;
+
+    QTabWidget *tab_widget;
+    MainWidget *main_widget;
+    DataWidget *data_widget;
+    PlanWidget *plan_widget;
+    SetWidget *set_widget;
 };
 #endif // MAINWINDOW_H

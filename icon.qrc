@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon/workdiary">
+        <file>all.png</file>
+        <file>close.png</file>
+        <file>data.png</file>
+        <file>icon.png</file>
+        <file>task-management.png</file>
+        <file>set.png</file>
+    </qresource>
+</RCC>

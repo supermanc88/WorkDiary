@@ -16,17 +16,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    datawidget.cpp \
     getwindowthread.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwidget.cpp \
+    mainwindow.cpp \
+    planwidget.cpp \
+    setwidget.cpp
 
 HEADERS += \
     common.h \
+    datawidget.h \
     getwindowthread.h \
-    mainwindow.h
+    mainwidget.h \
+    mainwindow.h \
+    planwidget.h \
+    setwidget.h
 
 FORMS += \
-    mainwindow.ui
+    datawidget.ui \
+    mainwidget.ui \
+    mainwindow.ui \
+    planwidget.ui \
+    setwidget.ui
 
 LIBS += "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\User32.Lib"
 
@@ -34,3 +46,6 @@ LIBS += "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17763.0\um\x64\User32.L
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icon.qrc
