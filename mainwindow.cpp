@@ -8,6 +8,12 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QDateTime>
+
+#include <QDebug>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -83,6 +89,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     tab_widget->resize(this->size());
 
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    current_table = current_date_time.toString("yyyy-MM-dd");
+
+    qDebug() << "Current table name = " << current_table << endl;
+
+
+
+    // 初始化数据库
+    InitDataBase();
+
 
     connect(tray_icon, &QSystemTrayIcon::activated, this, &MainWindow::WorkDiaryTrayIconActivate);
 
@@ -98,10 +114,43 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::InitDataBase()
+{
+    // 初始化数据库并打开
+    if (QSqlDatabase::contains()) {
+        diary_database = QSqlDatabase::database();
+    } else {
+        diary_database = QSqlDatabase::addDatabase("QSQLITE");
+        diary_database.setDatabaseName("WorkDiary.db");
+    }
+
+    if (!diary_database.open()) {
+        qDebug() << "Error : Failed to connect database." << diary_database.lastError() << endl;;
+    } else {
+        qDebug() << "Success to connect database" << endl;
+
+        // 检测是否存在当前日期的表
+        QSqlQuery query;
+        query.exec(QString("select count(*) from sqlite_master type='table' and name='%1'").arg(current_table));
+
+//        if (query.next()) {
+            if (query.value(0).toInt() == 0) {
+                qDebug() << current_table << "table does no exist" << endl;
+            } else {
+                qDebug() << current_table << "table exist" << endl;
+            }
+//        }
+
+    }
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     thread->CloseThread();
     thread->wait();
+
+    // 关闭数据库
+    diary_database.close();
 }
 
 

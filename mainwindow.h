@@ -9,6 +9,8 @@
 #include <QAction>
 #include <QTabWidget>
 
+#include <QSqlDatabase>
+
 #include "getwindowthread.h"
 #include "mainwidget.h"
 #include "datawidget.h"
@@ -28,6 +30,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+
+    void InitDataBase();
 
 protected:
 
@@ -55,5 +60,8 @@ private:
     DataWidget *data_widget;
     PlanWidget *plan_widget;
     SetWidget *set_widget;
+
+    QSqlDatabase diary_database;
+    QString current_table;
 };
 #endif // MAINWINDOW_H
